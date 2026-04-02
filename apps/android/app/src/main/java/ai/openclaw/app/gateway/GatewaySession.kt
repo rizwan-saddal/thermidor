@@ -184,7 +184,9 @@ class GatewaySession(
     val params =
       buildJsonObject {
         put("event", JsonPrimitive(event))
-        put("payloadJSON", JsonPrimitive(payloadJson ?: "{}"))
+        if (payloadJson != null) {
+          put("payloadJSON", JsonPrimitive(payloadJson))
+        }
       }
     try {
       conn.request("node.event", params, timeoutMs = 8_000)
